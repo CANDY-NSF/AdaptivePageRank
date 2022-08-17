@@ -146,7 +146,7 @@ void updateinitialIdentified( PR_Network *X, int *p, int *maxL,vector<changes> *
 
 
 
-void updatePageRank(PR_Network *X, int *p, int *maxL,vector<changes> *neighborRevisedList)
+void updatePageRank(PR_Network *X, int *p, int *maxL,vector<changes> *neighborRevisedList, bool *etc)
 {
     //cout<<*maxL;
   int counter=0;

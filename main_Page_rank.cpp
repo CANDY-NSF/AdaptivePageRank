@@ -191,7 +191,7 @@ cout<< i <<":::" <<X.at(i).In_Neigh[j].first<<":::"<< X.at(i).In_Neigh[j].second
     //printPageRank(&X);
     //updateinitialIdentified(&X,&p,&maxL,&neighborRevisedList,&initialList);
     //printPageRank(&X);
-    updatePageRank(&X,&p,&maxL,&neighborRevisedList);
+    updatePageRank(&X,&p,&maxL,&neighborRevisedList, &etc);
     updateEndTime=clock()-updateStartTime;
     updateTime=float(((float)updateEndTime)/CLOCKS_PER_SEC);
     cout <<fixed<< "Total Time for updating Network "<< updateTime <<"\n";
