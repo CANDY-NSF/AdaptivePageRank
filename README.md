@@ -1,6 +1,6 @@
 # AdaptivePageRank
 
-ESSENS is required to run this implmentation, Please download ESSENS from () and update the path in Makefile.
+ESSENS is required to run this implmentation, Please download ESSENS from (https://github.com/CANDY-NSF/ESSENS) and update the path in Makefile.
 
 ## compile command
 make all
