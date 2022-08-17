@@ -2,7 +2,7 @@
 
 ESSENS is required to run this implmentation, Please download ESSENS from () and update the path in Makefile.
 
-##compile command
+## compile command
 make all
 
 ## Run Input file
