@@ -131,6 +131,7 @@ cout <<"here";
 
 // Update all the meta information
 int maxL=atoi(argv[6]);
+bool etc= atoi(argv[7]);
  //Obtain value of probability of reaching page--guve n by dValue
    //updateStartTime=clock();
 
