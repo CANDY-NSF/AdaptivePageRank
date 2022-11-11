@@ -146,7 +146,7 @@ void updateinitialIdentified( PR_Network *X, int *p, int *maxL,vector<changes> *
 
 
 
-void updatePageRank(PR_Network *X, int *p, int *maxL,vector<changes> *neighborRevisedList, bool *etc)
+void updatePageRank(PR_Network *X, int *p, int *maxL,vector<changes> *neighborRevisedList)
 {
     //cout<<*maxL;
   int counter=0;
@@ -269,7 +269,7 @@ void updatePageRank(PR_Network *X, int *p, int *maxL,vector<changes> *neighborRe
         counter++;
 
     }//end of while
-    cout <<"maxL"<<*maxL<<"\n";
+  //  cout <<"maxL"<<*maxL<<"\n";
     //cout<<"counterStatus:"<<counter<<"\n";
 }
 /***End of Function ***/

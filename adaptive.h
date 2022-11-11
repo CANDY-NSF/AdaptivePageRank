@@ -33,7 +33,7 @@ void prepareinputforGalois(PR_Network *X)
 
 
 
-void adaptiveModel(int *p, char *file)
+void adaptiveModel(int *p,  const char *file)
 {
     cout <<"I am here running adaptive";
 

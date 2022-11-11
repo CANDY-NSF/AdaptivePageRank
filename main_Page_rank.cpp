@@ -11,7 +11,10 @@
 #include <string>
 #include <queue>
 #include <iostream>
-int main(int argc, char *argv[])
+//#include "../include/adaptive.h"
+//include "pythonadaptive.h"
+
+int pageRank(int argc)
 {
     clock_t q, q1, q2,t;
     clock_t updateStartTime;
@@ -21,11 +24,11 @@ int main(int argc, char *argv[])
 
     if ( argc <7) { cout << "INPUT ERROR:: 7 inputs required. First: filename \n Second: file with PR\n  Third: Set of changed edges \n Fourth: Number of nodes \n Fifth: Number of threads \n Sixth: Number of iterations\n Seventh: Output File name ";}
     //Check to see if file opening succeeded
-    ifstream the_file1 ( argv[1] ); if (!the_file1.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
-    ifstream the_file2 ( argv[2] ); if (!the_file2.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
-    ifstream the_file3 ( argv[3] ); if (!the_file3.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
-    int p = atoi(argv[5]);  //total number of threads per core
-    int nodes=atoi(argv[4]);//total number of nodes
+    //ifstream the_file1 ( argv[1] ); if (!the_file1.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
+    //ifstream the_file2 ( argv[2] ); if (!the_file2.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
+    //ifstream the_file3 ( argv[3] ); if (!the_file3.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
+    int p = 32;  //total number of threads per core
+    int nodes=10;//total number of nodes
 //ifstream the_file4 ( argv[6] ); if (!the_file3.is_open() ) { cout<<"INPUT ERROR:: Could not open file\n";}
 
 
@@ -41,16 +44,16 @@ int main(int argc, char *argv[])
     PR_Vertex PR_v;
     X.resize(nodes,PR_v);
 
-    int edges=readin_network(&X,argv[1]);
+    int edges=readin_network(&X,"readedges");
 
     cout <<"Average"<<edges/nodes<<"\n";
-    
+
     cout<< "done"<< "\n";
-    readin_PageRank(argv[2],&X);
+    readin_PageRank("initialpr",&X);
     q=clock()-q;
     cout << "Total Time for Reading Input"<< ((float)q)/CLOCKS_PER_SEC <<"\n";
-    
-    
+
+
     q=clock();
 
     vector<changes> neighborRevisedList;
@@ -61,9 +64,9 @@ int main(int argc, char *argv[])
     {
      cout <<i<<"::"<<X[i].dValue<<"\n";
     }*/
-    readin_changes(argv[3], &X,&neighborRevisedList);
+    readin_changes("changes", &X,&neighborRevisedList);
 
- /*  
+ /*
 
     for(int i=0;i<neighborRevisedList.size();i++)
 {
@@ -73,7 +76,7 @@ int main(int argc, char *argv[])
 	 {
 
                 cout<<neighborRevisedList.at(i).subtractionNeighborList.at(j)<<"\t"<<;
-          
+
 	 }
 
 
@@ -83,7 +86,7 @@ int main(int argc, char *argv[])
          {
 
                 cout<<neighborRevisedList.at(i).additionNeighborList.at(j)<<"\t";
-          
+
          }
 
 cout <<"\n";
@@ -95,7 +98,7 @@ cout <<"\n";
     q=clock()-q;
     cout << "Total Time for Reading Changes"<< ((float)q)/CLOCKS_PER_SEC <<"\n";
     /**=============================================**/
-    
+
     int countAffected=0;
    int count1=countAffectedvertices(&X,false, &countAffected);
     countAffected=count1;
@@ -117,25 +120,25 @@ for(int i=0;i<X.size();i++)
     PR_Vertex PR_v1;
     Y.resize(nodes,PR_v1);
 cout <<"here";
-  readin_network(&Y,argv[3]);
+  readin_network(&Y,"network");
     prepareinputforGalois(&Y);
-   adaptiveModel(&p, argv[3]);
+   adaptiveModel(&p, "network");
      //read Galois Output
 
     readGaloisOutput();
-    
+
 //cout<<count<<":::\n";
 
 /* Galois COmplete */
 /* Sriram Dynamic Implementation */
 
 // Update all the meta information
-int maxL=atoi(argv[6]);
-bool etc= atoi(argv[7]);
+int maxL=100;
+bool etc= 1;
  //Obtain value of probability of reaching page--guve n by dValue
    //updateStartTime=clock();
 
-/* 
+/*
 for (int i=0;i<X.size();i++)
 
 {
@@ -143,24 +146,24 @@ for (int i=0;i<X.size();i++)
  {
 
 cout<< i <<":::" <<X.at(i).In_Neigh[j].first<<":::"<< X.at(i).In_Neigh[j].second <<"\n";
-                  
+
         }
 }
 
 */
 
 
-	
+
 //compute_dValue(&X,&p);
 
-  
+
     //updateLevel(&X, &p, &maxL);
     //updateReach(&X, &p, &maxL);
 
-    
+
    clock_t DanglingStartTime;
     clock_t updateDanglingEndTime;
-   
+
    // updateStartTime=clock();
     //cout <<"max: "<<maxL<<"\n";
 
@@ -171,7 +174,7 @@ cout<< i <<":::" <<X.at(i).In_Neigh[j].first<<":::"<< X.at(i).In_Neigh[j].second
     countAffectedvertices(&X,true, &countAffected);
     updateDanglingEndTime=clock()-DanglingStartTime;
     float updateTime=float(((float)updateDanglingEndTime)/CLOCKS_PER_SEC);
-    
+
     cout <<fixed<< "Total Time for remove Dangling vertices"<<updateDanglingEndTime <<"\n";
 
     vector<int>initialList;
@@ -203,7 +206,7 @@ cout<< i <<":::" <<X.at(i).In_Neigh[j].first<<":::"<< X.at(i).In_Neigh[j].second
 //
 //
 //
-typedef pair<double,int> iPair; 
+typedef pair<double,int> iPair;
 
 priority_queue< iPair, vector <iPair> > pq;
 
@@ -244,10 +247,15 @@ for (int i=0;i<X.size();i++)
  {
 
 cout<< i <<X.at(i).In_Neigh[j].first<<"\n";
-		  
+
 	}
 }
 
 */
+return 1;
+}
+int main(int argc)
+{
+    pageRank(argc);
 }
 //cout <<fixed<< "Total Time for updating Network "<< updateTime <<"\n";

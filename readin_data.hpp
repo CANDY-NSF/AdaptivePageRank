@@ -41,7 +41,7 @@ void readin_networkE(char *myfile, vector<int_int> *allEdges, int *nodes)
 /*** End of Function ***/
 
 //Read Network From File
-int  readin_network(PR_Network *X, char *file)
+int  readin_network(PR_Network *X,  const char *file)
 {
     //File reading parameters
     FILE *graph_file;
@@ -85,7 +85,7 @@ int  readin_network(PR_Network *X, char *file)
 
 // information about Page Rank initial Values take them for updating at later stage
 
-void readin_PageRank(char *file, PR_Network *X)
+void readin_PageRank( const char *file, PR_Network *X)
 {
 
     FILE *graph_file;
@@ -109,7 +109,7 @@ void readin_PageRank(char *file, PR_Network *X)
 
 
 //Information about set of changed edges
-void readin_changes(char *myfile, PR_Network *X, vector<changes> *neighborRevisedList)
+int readin_changes( const char *myfile, PR_Network *X, vector<changes> *neighborRevisedList)
 {
     //File reading parameters
     FILE *graph_file;
@@ -121,7 +121,7 @@ void readin_changes(char *myfile, PR_Network *X, vector<changes> *neighborRevise
     
     graph_file=fopen(myfile, "r");
     while(fgets(line,128,graph_file) != NULL)
-    {
+    {  countNumberOfAffected++;
         sscanf(line,"%d  %d %d",&edge.first, &edge.second, &type);
         
         int n1=edge.first;
@@ -236,6 +236,7 @@ void readin_changes(char *myfile, PR_Network *X, vector<changes> *neighborRevise
 //cout <<"Percentage Affected"<<((float)countNumberOfAffected/(float)X->size())*100<<"\n";
 
     fclose(graph_file);
+    return  countNumberOfAffected;
     
 }
 /*** End of Function ***/
